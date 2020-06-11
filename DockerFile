@@ -7,4 +7,3 @@ RUN apt-get install -y  unzip wget
 RUN rm -rf /usr/src/wordpress/wp-content/plugins/woocommerce
 
 RUN wget https://downloads.wordpress.org/plugin/woocommerce.${WOOCOMMERCE_VERSION}.zip -O /tmp/temp.zip     && cd /usr/src/wordpress/wp-content/plugins     && unzip /tmp/temp.zip     && rm /tmp/temp.zip
-CMD ["supervisord"]
