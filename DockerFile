@@ -1,14 +1,10 @@
+FROM wordpress
 MAINTAINER Thanh Tam Ha "thanhtam.ha1994@hotmail.com"
-ENV WOOCOMMERCE_VERSION=3.6.4
-/bin/sh -c apt-get update && apt-get install -y apt-transport-https
-/bin/sh -c apt-get install -y  unzip wget mariadb-server supervisor
+ENV WOOCOMMERCE_VERSION=4.2.0
+RUN apt-get update -y
+RUN apt-get install -y  unzip wget
 
-/bin/sh -c rm -rf /usr/src/wordpress/wp-content/plugins/woocommerce
+RUN rm -rf /usr/src/wordpress/wp-content/plugins/woocommerce
 
-/bin/sh -c wget https://downloads.wordpress.org/plugin/woocommerce.${WOOCOMMERCE_VERSION}.zip -O /tmp/temp.zip     && cd /usr/src/wordpress/wp-content/plugins     && unzip /tmp/temp.zip     && rm /tmp/temp.zip
-COPY file:b70f6098da0ea8fb71702ab2c53ff9b196782a680162e355c0edef69fdf85539 in /etc/supervisor/conf.d/supervisor.conf 
-COPY file:5565c81e7bedaf5192b2ff4a33c850a091bda00e0f0053a8f98e489abfaf9008 in /usr/local/bin/ 
-/bin/sh -c chmod 755 /usr/local/bin/entrypoint.sh
-/bin/sh -c cp -rp /var/lib/mysql /var/lib/mysql-no-volume
+RUN wget https://downloads.wordpress.org/plugin/woocommerce.${WOOCOMMERCE_VERSION}.zip -O /tmp/temp.zip     && cd /usr/src/wordpress/wp-content/plugins     && unzip /tmp/temp.zip     && rm /tmp/temp.zip
 CMD ["supervisord"]
-
